@@ -1,0 +1,112 @@
+<html>
+  <head>
+    <title>图片旋转木马3D浏览效果</title>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0,user-scalable=no">
+    <style type="text/css">
+    body{
+      padding-top: 30px;
+    }
+    #container{
+      -webkit-perspective: 800px;
+      width: 90%;
+      min-height: 200px;
+      margin: 0 5%;
+      text-align: center;
+      position: relative;
+      box-sizing: border-box;
+    }
+    #list{
+      -webkit-transform-style: preserve-3d;
+      position: absolute;
+      box-sizing: border-box;
+      width: 100%;
+      height: 100px;
+      margin: 0;
+      padding: 0;
+      -webkit-transition: -webkit-transform .3s ease-in;
+    }
+    #list li{
+      width: 80px;
+      height: 80px;
+      position: absolute;
+      display: inline-block;
+      margin-left: -40px;
+      left: 50%;
+      bottom: 0;
+    }
+    #list li:nth-child(1) { 
+      -webkit-transform: rotateY(0deg) translateZ(130px); 
+    }
+    #list li:nth-child(2) { 
+      -webkit-transform: rotateY(40deg) translateZ(130px); 
+    }
+    #list li:nth-child(3) { 
+      -webkit-transform: rotateY(80deg) translateZ(130px); 
+    }
+    #list li:nth-child(4) { 
+      -webkit-transform: rotateY(120deg) translateZ(130px); 
+    }
+    #list li:nth-child(5) { 
+      -webkit-transform: rotateY(160deg) translateZ(130px); 
+    }
+    #list li:nth-child(6) { 
+      -webkit-transform: rotateY(200deg) translateZ(130px); 
+    }
+    #list li:nth-child(7) { 
+      -webkit-transform: rotateY(240deg) translateZ(130px); 
+    }
+    #list li:nth-child(8) { 
+      -webkit-transform: rotateY(280deg) translateZ(130px); 
+    }
+    #list li:nth-child(9) { 
+      -webkit-transform: rotateY(320deg) translateZ(130px); 
+    }
+    </style>
+  </head>
+  <body>
+    <div id="container">
+      <h1>点击卡片区域来进行旋转</h1>
+      <ul id="list" onclick="rotate();">
+        <li style="background-color: #f00;">red</li>
+        <li style="background-color: #0f0;">green</li>
+        <li style="background-color: #00f;">blue</li>
+        <li style="background-color: #ff0;">yellow</li>
+        <li style="background-color: #f0f;">purple</li>
+        <li style="background-color: #0ff;">Powder blue</li>
+        <li style="background-color: #333;">dark</li>
+        <li style="background-color: #f88;">pink</li>
+        <li style="background-color: rgb(176, 194, 48);">cyan</li>
+      </ul>
+    </div>
+    <script src="http://g.tbcdn.cn/mtb/zepto/1.0.4/zepto.js"></script>
+    <script type="text/javascript">
+    $ = Zepto;
+    var i =0;
+    var bool = false;
+    var lis = $('#list li')
+    lis.eq(0).css('zoom', 1.3);
+
+    //点击旋转
+    var rotate = function(){
+
+      //判断当前正对面的卡片，放大
+      var cur = (9-i) % 9;
+      lis.eq(cur).css('zoom', 1);
+      // lis.each(function(index, li){
+      //   console.log(li);
+      //   $(li).css('zoom', 1);
+      // });
+      setTimeout(function(){
+        lis.each(function(index, li){
+          $(li).css('zoom', 1);
+        });
+        lis.eq(cur-1).css('zoom', 1.3);
+      },300);
+        
+      i ++;
+      $('#list').css('-webkit-Transform', 'rotateY('+i*40+'deg)');
+    }
+    </script>
+     </body>
+</html>

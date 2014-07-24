@@ -1,0 +1,205 @@
+<html>
+  <head>
+    <title>转场效果</title>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0,user-scalable=no">
+    <style type="text/css">
+    body{
+      padding: 0;
+      margin: 0;
+    }
+    #container{
+      -webkit-perspective: 500px;
+      width: 100%;
+      min-height: 500px;
+      text-align: center;
+      position: relative;
+      box-sizing: border-box;
+    }
+   
+    #list{
+      -webkit-transform-origin: 0 0;
+      position: absolute;
+      box-sizing: border-box;
+      width: 90%;
+      height: 580px;
+      margin: 0 5%;
+      padding: 0;
+      
+    }
+    #list li{
+      width: 100%;
+      height: 450px;
+      position: absolute;
+      display: inline-block;
+      left: 0;
+      top: 50px;
+      padding: 50px 20px 20px;
+      box-sizing: border-box;
+      -webkit-transform-origin: 0 100%;
+      -webkit-transition: -webkit-transform .3s ease-in;
+    }
+    #list li:nth-child(1) { 
+      -webkit-transform: rotateY(0deg) translateX(0); 
+    }
+    #list li:nth-child(2) { 
+      -webkit-transform: rotateY(-25deg) translateX(-110%); 
+    }
+    #list li:nth-child(3) { 
+      -webkit-transform: rotateY(-25deg) translateX(-110%); 
+    }
+    #list li:nth-child(4) { 
+      -webkit-transform: rotateY(-25deg) translateX(-110%); 
+    }
+    #list li:nth-child(5) { 
+      -webkit-transform: rotateY(-25deg) translateX(-110%); 
+    }
+    .pre{
+      width: 80px;
+      height: 40px;
+      font-size: 20px;
+      text-align: center;
+      line-height: 40px;
+      background-color: #0f0;
+      color: #fff;
+      position: absolute;
+      left: 20px;
+      bottom: 20px;
+    }
+    .next{
+      width: 80px;
+      height: 40px;
+      font-size: 20px;
+      text-align: center;
+      line-height: 40px;
+      background-color: #0f0;
+      color: #fff;
+      position: absolute;
+      right: 20px;
+      bottom: 20px;
+    }
+    </style>
+  </head>
+  <body>
+    <div id="container">
+      <ul id="list">
+        <li style="background-color: #f00;">
+        	<h1>第一页</h1>
+        	
+        </li>
+        <li style="background-color: #0f0;">
+        	<h1>第二页</h1>
+        	
+        </li>
+        <li style="background-color: #00f;">
+        	<h1>第三页</h1>
+        	
+        </li>
+        <li style="background-color: #ff0;">
+        	<h1>第四页</h1>
+        	
+        </li>
+        <li style="background-color: #f0f;">
+        	<h1>第五页</h1>
+        	
+        </li>
+      </ul>
+
+    </div>
+    <div>
+        <div class="pre">上一页</div>
+        <div class="next">下一页</div>
+      </div>
+    <script src="http://g.tbcdn.cn/mtb/zepto/1.0.4/zepto.js"></script>
+    <script type="text/javascript">
+    $ = Zepto;
+    $(document).ready(function () {
+      //记录当前第几页
+      var index = 0;
+      //上一页
+      $('.pre').on('click', function(e) {
+        //当前页
+        var cur = $('#list li').eq(index);
+        //下一页
+        var next = cur.next();
+        //前一页
+        var pre = cur.prev();
+        //最后一页和第一页，便于循环
+        var last = $('#list li').last();
+        var first = $('#list li').first();       
+        if(index === 4) {
+          next = first;
+          index --;
+        }else if(index === 0) {
+          pre = last;
+          index = 4;
+        } else {
+          index --;
+        }
+        //确保前一页在左侧
+        if(pre.css('-webkit-transform') != 'rotateY(-25deg) translateX(-110%)') {
+          pre.css('-webkit-transition', '0s ease-in');
+          pre.css('-webkit-transform', 'rotateY(-25deg) translateX(-110%)');
+          setTimeout(function(){
+            pre.css('-webkit-transition', '-webkit-transform .3s ease-in');
+            next.css('-webkit-transform', 'rotateY(-25deg) translateX(-110%)').css('z-index', 1).css('opacity', '0');
+            cur.css('-webkit-transform', 'rotateY(25deg) translateX(0px)').css('z-index', 2);
+            //前一页动作回到原位，便于循环。 透明度为0， 以免画面出现杂边
+            pre.css('-webkit-transform', 'rotateY(0deg) translateX(0px)').css('z-index', 3).css('opacity', '1');
+          }, 0);
+          return;
+          
+        }
+
+        next.css('-webkit-transform', 'rotateY(-25deg) translateX(-110%)').css('z-index', 1).css('opacity', '0');
+        cur.css('-webkit-transform', 'rotateY(25deg) translateX(0px)').css('z-index', 2);
+        //前一页动作回到原位，便于循环。 透明度为0， 以免画面出现杂边
+        pre.css('-webkit-transform', 'rotateY(0deg) translateX(0px)').css('z-index', 3).css('opacity', '1');
+        
+      });
+
+      $('.next').on('click', function(e) {
+        //当前页
+        var cur = $('#list li').eq(index);
+        //下一页
+        var next = cur.next();
+        //前一页
+        var pre = cur.prev();
+        //最后一页和第一页，便于循环
+        var last = $('#list li').last();
+        var first = $('#list li').first();       
+        if(index === 4) {
+          next = first;
+          index = 0;
+        } else if(index === 0) {
+          pre = last;
+          index ++;
+        } else {
+          index ++;
+        }
+        //确保后一页在下面
+        if(next.css('-webkit-transform') != 'rotateY(25deg) translateX(0px)') {
+          next.css('-webkit-transition', '0s ease-in');
+          next.css('-webkit-transform', 'rotateY(25deg) translateX(0px)');
+          setTimeout(function() {
+            next.css('-webkit-transition', '-webkit-transform .3s ease-in');
+            //前一页动作回到原位，便于循环。 透明度为0， 以免画面出现杂边
+            pre.css('-webkit-transform', 'rotateY(25deg) translateX(0px)').css('z-index', 1).css('opacity', '0');
+            cur.css('-webkit-transform', 'rotateY(-25deg) translateX(-110%)').css('z-index', 3);
+            next.css('-webkit-transform', 'rotateY(0deg) translateX(0px)').css('z-index', 2).css('opacity', '1');
+          } ,0);
+          return;
+          
+        }
+        //前一页动作回到原位，便于循环。 透明度为0， 以免画面出现杂边
+        pre.css('-webkit-transform', 'rotateY(25deg) translateX(0px)').css('z-index', 1).css('opacity', '0');
+
+        
+        cur.css('-webkit-transform', 'rotateY(-25deg) translateX(-110%)').css('z-index', 3);
+        next.css('-webkit-transform', 'rotateY(0deg) translateX(0px)').css('z-index', 2).css('opacity', '1');
+      });
+      
+    });
+    </script>
+     </body>
+</html>

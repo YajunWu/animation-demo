@@ -1,0 +1,95 @@
+<html>
+    <head> 
+        <meta charset="utf-8"> 
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"> 
+        <title>迅速撑全屏效果</title> 
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0"> 
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-status-bar-style" content="black"> 
+        <meta name="format-detection" content="telephone=no">   
+    </head> 
+    <body>
+        <style type="text/css">
+        #header{
+            width: 100%;
+            height: 200px;
+        }
+        .header-bg{
+            opacity: 0;
+            background: url(http://gtms03.alicdn.com/tps/i3/TB1JnhKFVXXXXXCXVXXnr7S0FXX-640-367.jpg) 0 0 no-repeat;
+            background-size: cover;
+            width: 100%;
+            height: 200px;
+            position: absolute;
+            top: 0;
+            left: 0;
+            -webkit-transition: opacity .5s ease-in .4s;
+        }
+        #header-init{
+            margin: 0 auto 0;
+            overflow: hidden;
+            width: 100%;
+            height: 200px;
+            position: absolute;
+            left: 0;
+            top: 0;
+        }
+        .round{
+            opacity: 1;
+            background-color: #ff0873;
+            /*width: 40px;
+            height: 40px;
+            border-radius: 20px;
+            */
+            /*start用心形图标代替圆形*/
+            background: url(http://gtms02.alicdn.com/tps/i2/TB1kzhPFVXXXXafXpXXR_hYIXXX-250-120.png) no-repeat;
+            background-size: 125px 60px;
+            background-position: -65px -3px;
+            width: 59px;
+            height: 54px;
+            /*end*/
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            margin-top: 40px;
+        }
+        .header-init1{
+            margin-left: -80px;
+            -webkit-transform: rotate(60deg);
+            -webkit-transition: margin-left .3s ease-in, margin-top .3s ease-in, opacity .1s ease-in .3s;
+        }
+        .header-init2{
+            margin-left: -20px;
+            -webkit-transform: rotate(25deg);
+            -webkit-transition: margin-top .3s ease-in, -webkit-transform .3s ease-in .3s, opacity .3s ease-in .3s;
+        }
+        .header-init3{
+            margin-left: 40px;
+            -webkit-transition: margin-left .3s ease-in, margin-top .3s ease-in, opacity .1s ease-in .3s;
+        }
+        .movetop{
+            opacity: 0;
+            margin-top: -20px;
+            margin-left: -20px;
+        }
+        </style>
+        <div id="header">
+            <div class="header-bg"></div>
+            <div id="header-init">
+                <div class="header-init1 round"></div>
+                <div class="header-init2 round"></div>
+                <div class="header-init3 round"></div>
+            </div>
+        </div>
+        <script src="http://g.tbcdn.cn/mtb/zepto/1.0.4/zepto.js"></script>
+        <script type="text/javascript">
+            $ = Zepto;
+            $(document).ready(function() {
+                $('.round').addClass('movetop');
+                $('.header-init2').css('-webkit-transform','rotate(25deg) scale(14)');
+                $('.header-bg').css('opacity', 1);
+            });
+           
+        </script>
+    </body>
+</html>
